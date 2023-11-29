@@ -1,73 +1,114 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import './App.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import {
-  FaUser,
-  FaAddressBook,
-  FaCalendarAlt,
-  FaHouseUser,
-  FaTv,
-  FaCog,
-} from 'react-icons/fa';
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { FaUser, FaAddressBook, FaCalendarAlt, FaHouseUser, FaTv, FaCog } from 'react-icons/fa';
 
+const Carousel = ({ children }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const Carousel = ({ children }) => {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      prevArrow: <PrevArrow />,
-      nextArrow: <NextArrow />,
-    };
-
-    return <Slider {...settings}>{children}</Slider>;
+  const settings = {
+    dots: true,
+    infinite: true,
+    lazyLoad: true,
+    speed: 500,
+    slidesToShow: 1,
+    centerMode: true,
+    centerPadding: 0,
+    nextArrow: <NextArrow onClick={() => setCurrentSlide(currentSlide + 1)} />,
+    prevArrow: <PrevArrow onClick={() => setCurrentSlide(currentSlide - 1)} />,
   };
 
-  const PrevArrow = (props) => {
-    const { onClick } = props;
-    return <div className="arrow prev" onClick={onClick}><span>&#8249;</span></div>;
-  };
+  return (
+    <div>
+      <Slider {...settings} afterChange={(index) => setCurrentSlide(index)}>
+        {children}
+      </Slider>
+      <p>{currentSlide}</p>
+    </div>
+  );
+};
 
-  const NextArrow = (props) => {
-    const { onClick } = props;
-    return <div className="arrow next" onClick={onClick}><span>&#8250;</span></div>;
-  };
+const NextArrow = ({ onClick }) => {
+  return (
+    <div className="arrow next" onClick={onClick}>
+      <FaArrowRight />
+    </div>
+  );
+};
 
-function App() { 
-  
- return (
+const PrevArrow = ({ onClick }) => {
+  return (
+    <div className="arrow prev" onClick={onClick}>
+      <FaArrowLeft />
+    </div>
+  );
+};
+
+const App = () => {
+  // const history = useHistory();
+  //  history.push('/Home.jsx');
+  // };
+  // const handleHomeBoxClick = () => {
+  return (
     <div className="App-container">
-      <Carousel>
-      <div className='app-box'>
-      <FaUser size={200}/>
+      <h1>React 3D Slider</h1>
+      <Carousel> 
+       <div className='app-box' >
+      <FaUser size={300}/>
       
       </div>
       <div className='home-box'>
-      <FaHouseUser size={200}/>
+      <FaHouseUser size={300}/>
       </div>
       <div className='contact-box'>
         
-        <FaAddressBook size={200}  />
+        <FaAddressBook size={300}  />
       </div>
-      <div className='set-box'>
+      <div className='cal-box'>
         
-        <FaCalendarAlt size={200} />
+        <FaCalendarAlt size={300} />
       </div>
       <div className='enter-box'>
         
-        <FaTv size={200}/>
+        <FaTv size={300}/>
       </div>
       <div className='set-box'>
-      <FaCog size={200} color='black'/>
+      <FaCog size={300} color='black'/>
       {/* <h2>Setting</h2> */}
       </div>
       </Carousel>
-    </div>
+      </div>
   );
-}
+};
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
